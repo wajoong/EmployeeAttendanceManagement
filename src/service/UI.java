@@ -77,6 +77,29 @@ public class UI {
         }
     }
 
+    public static EmployeeState selectEmployeeState() {
+        EmployeeState employeeState;
+        while(true) {
+            switch (displayAttendance()) {
+                case 1:
+                    employeeState = EmployeeState.CHECK_IN;
+                    break;
+                case 2:
+                    employeeState = EmployeeState.CHECK_OUT;
+                    break;
+                case 3:
+                    employeeState = EmployeeState.EARLY_LEAVE;
+                    break;
+                case 4:
+                    employeeState = EmployeeState.VACATION;
+                    break;
+                default:
+                    errorIntMessage();
+                    break;
+            }
+        }
+    }
+
     //이름 수정
     public static String selectName() {
         System.out.println("\n이름을 입력해주세요");
@@ -94,17 +117,16 @@ public class UI {
     //출퇴근 페이지
     public static int displayAttendance(){
             System.out.println("\n1.출근 2.퇴근 3.조퇴 4.휴가");
-            return Integer.parseInt(sc.nextLine());
+            return getInt();
     }
 
     //직원 추가 페이지
     public static Employee addEmployee(){
         Employee employee = new Employee();
-
+        employee.setEmployeeNumber(selectEmployeeNumber());
+        employee.setName(selectName());
         employee.setDepartment(selectDepartment());
         employee.setPosition(selectPosition());
-        employee.setName(selectName());
-        employee.setEmployeeNumber(selectEmployeeNumber());
 
         return employee;
     }
@@ -162,7 +184,6 @@ public class UI {
                 "직급 : " + printPosition(e.getPosition()) + " / " +
                 "이름 : " + e.getName() + " / " +
                 "사원번호 " + e.getEmployeeNumber();
-
     }
 
     //출퇴근 시간 문자형으로 반환

@@ -1,14 +1,14 @@
 package service;
 
-import manager.AttendanceManagement;
-import manager.EmployeeManagement;
+import manager.AttendanceManagementDBImpl;
+import manager.EmployeeManagementDBImpl;
 import person.Attendance;
 import person.Employee;
 import person.EmployeeState;
 
 public class Service {
-    private final EmployeeManagement employeeManagement = new EmployeeManagement();
-    private final AttendanceManagement attendanceManagement = new AttendanceManagement();
+    private final EmployeeManagementDBImpl employeeManagement = new EmployeeManagementDBImpl();
+    private final AttendanceManagementDBImpl attendanceManagement = new AttendanceManagementDBImpl();
     Employee employee;
 
 
@@ -19,22 +19,22 @@ public class Service {
 
     //직원 리스트 출력
     public void printEmployee() {
-        if(employeeManagement.getEmployeeList().size() == 0){
+        if(employeeManagement.findAll().size() == 0){
             UI.noEmployeeMessage();
             return;
         }
-        for (Employee e : employeeManagement.getEmployeeList()) {
+        for (Employee e : employeeManagement.findAll()) {
             UI.printEmployee(e);
         }
     }
 
     //직원의 출퇴근 기록 출력
     public void printAttendance() {
-        if(attendanceManagement.getAttendanceList().size() == 0){
+        if(attendanceManagement.findAll().size() == 0){
             UI.noAttendanceMessage();
             return;
         }
-        for (Attendance a : attendanceManagement.getAttendanceList()) {
+        for (Attendance a : attendanceManagement.findAll()) {
             UI.printAttendance(a);
         }
     }
@@ -78,7 +78,7 @@ public class Service {
                 updateEmployeePage();
                 break;
             case 3:
-                employeeManagement.leaveEmployee();
+                employeeManagement.leaveEmployee(UI.selectEmployeeNumber());
                 break;
             case 4:
                 break;
@@ -90,22 +90,21 @@ public class Service {
 
     //직원 정보 수정
     public void updateEmployeePage(){
-        int updateNum = UI.selectEmployeeNumber();
-        employee = employeeManagement.findEmployee(updateNum);
+        employee = employeeManagement.findEmployee(UI.selectEmployeeNumber());
         if(employee == null){
             return;
         }
         switch (UI.displayUpdateEmployee()){
             case 1:
-                employeeManagement.updateName(updateNum);
+                employeeManagement.updateName(employee, UI.selectName());
                 UI.updateNameMessage();
                 break;
             case 2:
-                employeeManagement.updateDept(updateNum);
+                employeeManagement.updateDept(employee);
                 UI.updateDepartmentMessage();
                 break;
             case 3:
-                employeeManagement.updatePosition(updateNum);
+                employeeManagement.updatePosition(employee);
                 UI.updatePositionMessage();
                 break;
             case 4:

@@ -14,7 +14,6 @@ public class Attendance {
         this.checkTime = new Date();
         this.employeeState = employee.getEmployeeState();
     }
-
     public Employee getEmployee() {
         return employee;
     }

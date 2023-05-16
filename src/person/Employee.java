@@ -1,15 +1,15 @@
 package person;
 
+
 public class Employee {
     private Department department;
     private Position position;
     private String name;
     private int employeeNumber;
-    private EmployeeState employeeState;
+    private EmployeeState employeeState = EmployeeState.DONE;
 
     public Employee() {
     }
-
     public Employee(Employee employee) {
         this.department = employee.department;
         this.position = employee.position;
